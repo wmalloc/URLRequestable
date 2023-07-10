@@ -1,5 +1,6 @@
 @testable import URLRequestable
 import XCTest
+import OrderedCollections
 
 final class URLRequestableTests: XCTestCase {
     func testDefaultHeaders() throws {

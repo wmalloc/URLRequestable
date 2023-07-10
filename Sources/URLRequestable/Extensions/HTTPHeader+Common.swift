@@ -39,20 +39,20 @@ public extension HTTPHeader {
         HTTPHeader(name: .userAgent, value: value)
     }
 
-    static func contentDisposition(_ value: String) -> HTTPHeader {
+    static func contentDisposition(_ value: String) -> Self {
         HTTPHeader(name: .contentDisposition, value: value)
     }
 
     /// See the [User-Agent header](https://tools.ietf.org/html/rfc7231#section-5.5.3).
-    static var defaultUserAgent: HTTPHeader {
+    static var defaultUserAgent: Self {
         .userAgent(String.url_userAgent)
     }
 
-    static var defaultAcceptLanguage: HTTPHeader {
+    static var defaultAcceptLanguage: Self {
         .acceptLanguage(Locale.preferredLanguages.prefix(6).url_qualityEncoded())
     }
 
-    static var defaultAcceptEncoding: HTTPHeader {
+    static var defaultAcceptEncoding: Self {
         .acceptEncoding(["br", "gzip", "deflate"].url_qualityEncoded())
     }
 }
