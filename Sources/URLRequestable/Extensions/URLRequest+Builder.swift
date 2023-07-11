@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import HTTPTypes
 
 public extension URLRequest {
     @discardableResult
@@ -156,7 +157,7 @@ public extension URLRequest {
     }
 
     @discardableResult
-    func setMethod(_ method: HTTPMethod?) -> Self {
+    func setMethod(_ method: HTTPRequest.Method?) -> Self {
         setHttpMethod(method?.rawValue)
     }
 

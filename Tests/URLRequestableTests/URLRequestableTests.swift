@@ -18,7 +18,7 @@ final class URLRequestableTests: XCTestCase {
 
         let acceptLanguage = HTTPHeader.defaultAcceptLanguage
         XCTAssertEqual(acceptLanguage.name, .acceptLanguage)
-        let lanugages = Locale.preferredLanguages.prefix(6).url_qualityEncoded()
+        let lanugages = Locale.preferredLanguages.prefix(6).url_qualityEncoded
         XCTAssertEqual(acceptLanguage.value, lanugages)
     }
 }

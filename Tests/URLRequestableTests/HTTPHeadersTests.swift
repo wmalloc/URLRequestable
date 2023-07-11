@@ -8,6 +8,7 @@
 
 @testable import URLRequestable
 import XCTest
+import HTTPTypes
 
 final class HTTPHeadersTests: XCTestCase {
 	func testBaseHeaders() throws {
@@ -33,7 +34,7 @@ final class HTTPHeadersTests: XCTestCase {
 
 	func testURLRequestHeaders() throws {
 		let request = URLRequest(url: URL(string: "https://api.github.com")!)
-			.setMethod(.GET)
+			.setMethod(.get)
 			.setUserAgent(String.url_userAgent)
 			.setHttpHeaders(HTTPHeaders.defaultHeaders)
 			.addHeader(HTTPHeader.accept(.json))

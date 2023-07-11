@@ -49,10 +49,10 @@ public extension HTTPHeader {
     }
 
     static var defaultAcceptLanguage: Self {
-        .acceptLanguage(Locale.preferredLanguages.prefix(6).url_qualityEncoded())
+        .acceptLanguage(Locale.preferredLanguages.prefix(6).url_qualityEncoded)
     }
 
     static var defaultAcceptEncoding: Self {
-        .acceptEncoding(["br", "gzip", "deflate"].url_qualityEncoded())
+        .acceptEncoding(["br", "gzip", "deflate"].url_qualityEncoded)
     }
 }

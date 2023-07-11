@@ -5,14 +5,17 @@
 //
 
 import Foundation
+import HTTPTypes
+
+public typealias URLDataResponse = (data: Data, response: URLResponse)
 
 public protocol URLRequestable {
     associatedtype Response
 
-    typealias ResponseTransformer = Transformer<DataResponse, Response>
+    typealias ResponseTransformer = Transformer<URLDataResponse, Response>
 
     var apiBaseURLString: String { get }
-    var method: HTTPMethod { get }
+    var method: HTTPRequest.Method { get }
     var path: String { get }
     var headers: [HTTPHeader] { get }
     var body: Data? { get }
@@ -25,8 +28,8 @@ public protocol URLRequestable {
 }
 
 public extension URLRequestable {
-    var method: HTTPMethod {
-        .GET
+    var method: HTTPRequest.Method {
+        .get
     }
 
     var headers: [HTTPHeader] {
