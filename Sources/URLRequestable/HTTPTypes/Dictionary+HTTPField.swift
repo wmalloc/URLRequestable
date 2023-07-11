@@ -13,13 +13,13 @@ extension Dictionary where Key == AnyHashable, Value == Any {
             self[field.name.canonicalName] ?? self[field.name.rawName]
         }
         set {
-            guard let newValue else {
+            guard let value = newValue else {
                 if removeValue(forKey: field.name.canonicalName) == nil {
                     removeValue(forKey: field.name.rawName)
                 }
                 return
             }
-            self[field.name.canonicalName] = newValue
+            self[field.name.canonicalName] = value
         }
     }
 }

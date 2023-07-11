@@ -23,7 +23,7 @@ public extension Data {
 
 public extension Data? {
     @discardableResult
-    func url_validateNotEmptyData() throws -> Self {
+    func url_validateNotEmptyData() throws -> Data {
         guard let data = self else {
             throw URLError(.cannotDecodeContentData)
         }
