@@ -6,11 +6,12 @@
 
 import Foundation
 import OrderedCollections
+import HTTPTypes
 
 public extension HTTPHeaders {
-    func add(_ header: HTTPHeader) -> Self {
+    func add(_ header: HTTPField) -> Self {
         var headers = self
-        headers[header.name] = header.value ?? ""
+        headers[header.name] = header
         return headers
     }
 }

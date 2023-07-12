@@ -7,8 +7,9 @@
 
 import Foundation
 import OrderedCollections
+import HTTPTypes
 
-public typealias HTTPHeaders = OrderedDictionary<String, String>
+public typealias HTTPHeaders = OrderedDictionary<HTTPField.Name, HTTPField>
 
 open class MultipartFormBodyPart {
 	static var streamBufferSize: Int = 1024
@@ -36,7 +37,7 @@ public extension MultipartFormBodyPart {
 
 extension MultipartFormBodyPart {
 	func encodedHeaders() -> Data {
-		let headerText = headers.map { "\($0.key): \($0.value)\(EncodingCharacters.crlf)" }
+        let headerText = headers.map { "\($0.key.canonicalName): \($0.value.value)\(EncodingCharacters.crlf)" }
 			.joined()
 			+ EncodingCharacters.crlf
 

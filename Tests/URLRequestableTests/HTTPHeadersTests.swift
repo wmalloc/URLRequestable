@@ -8,6 +8,7 @@
 
 @testable import URLRequestable
 import XCTest
+import HTTPTypes
 
 final class HTTPHeadersTests: XCTestCase {
 	func testBaseHeaders() throws {
@@ -36,7 +37,7 @@ final class HTTPHeadersTests: XCTestCase {
 			.setMethod(.get)
 			.setUserAgent(String.url_userAgent)
 			.setHttpHeaders(HTTPHeaders.defaultHeaders)
-			.addHeader(HTTPHeader.accept(.json))
+			.addHeader(HTTPField.accept(.json))
 
 		let headers = request.headers
 		XCTAssertNotNil(headers)
@@ -47,14 +48,14 @@ final class HTTPHeadersTests: XCTestCase {
 
 	func testDictionary() throws {
 		var headers = HTTPHeaders()
-		headers[.contentType] = .xml
+        headers[.contentType] = .contentType(.xml)
 		XCTAssertEqual(headers.count, 1)
-		XCTAssertEqual(headers[.contentType], .xml)
-		headers[.contentType] = .json
+		XCTAssertEqual(headers[.contentType], .contentType(.xml))
+		headers[.contentType] = .contentType(.json)
 		XCTAssertEqual(headers.count, 1)
-		XCTAssertEqual(headers[.contentType], .json)
-		headers = headers.add(HTTPHeader(name: .authorization, value: "Password"))
-			.add(HTTPHeader(name: .contentLength, value: "\(0)"))
+		XCTAssertEqual(headers[.contentType], .contentType(.json))
+		headers = headers.add(HTTPField(name: .authorization, value: "Password"))
+			.add(HTTPField(name: .contentLength, value: "\(0)"))
 			.add(.authorization(token: "Token"))
 		XCTAssertEqual(headers.count, 3)
 		let dictionary = headers.dictionary

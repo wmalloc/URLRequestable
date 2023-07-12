@@ -7,6 +7,7 @@
 
 import CoreServices
 import Foundation
+import HTTPTypes
 
 open class MultipartFormData {
 	public let boundary: String
@@ -160,13 +161,13 @@ extension MultipartFormData {
 			disposition += "; filename=\"\(fileName)\""
 		}
 
-		var headers: [HTTPHeader] = [.contentDisposition(disposition)]
+		var headers: [HTTPField] = [.contentDisposition(disposition)]
 		if let mimeType {
-            headers.append(HTTPHeader.contentType(mimeType + EncodingCharacters.crlf))
+            headers.append(HTTPField.contentType(mimeType + EncodingCharacters.crlf))
 		}
         return headers.reduce(HTTPHeaders()) { partialResult, header in
             var result = partialResult
-            result[header.name] = header.value ?? ""
+            result[header.name] = header
             return result
         }
 	}

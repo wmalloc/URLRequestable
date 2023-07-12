@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HTTPTypes
 
 public extension URLRequest {
 	@discardableResult
@@ -15,17 +16,12 @@ public extension URLRequest {
 		return request
 	}
 
-	@discardableResult
-	func addHeaders(_ headers: HTTPHeaders) -> Self {
-		addHeaders(headers.headers)
-	}
-    
     @discardableResult
     func setMultipartFormData(_ multipartFormData: MultipartFormData) throws -> Self {
         let request = self
         request.setHttpBody(try multipartFormData.encoded(), contentType: multipartFormData.contentType)
-            .setHeader(HTTPHeader(name: .contentLength, value: "\(multipartFormData.contentLength)"))
-            .setHeader(HTTPHeader(name: .contentType, value: multipartFormData.contentType))
+            .setHeader(HTTPField(name: .contentLength, value: "\(multipartFormData.contentLength)"))
+            .setHeader(HTTPField(name: .contentType, value: multipartFormData.contentType))
         return self
     }
 }
@@ -33,8 +29,11 @@ public extension URLRequest {
 public extension URLRequest {
 	var headers: HTTPHeaders? {
 		get {
-			let values = allHTTPHeaderFields?.compactMap { (key: String, value: String) in
-				HTTPHeader(name: key, value: value)
+			let values = allHTTPHeaderFields?.compactMap { (key: String, value: String) -> HTTPField? in
+                guard let fieldName = HTTPField.Name(key) else {
+                    return nil
+                }
+				return HTTPField(name: fieldName, value: value)
 			}
 			guard let values else {
 				return nil

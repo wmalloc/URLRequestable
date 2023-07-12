@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import HTTPTypes
 
 public extension HTTPHeaders {
 	static var defaultHeaders: HTTPHeaders {
-		HTTPHeaders(arrayLiteral: HTTPHeader.defaultUserAgent, .defaultAcceptEncoding, .defaultAcceptLanguage)
+		HTTPHeaders(arrayLiteral: HTTPField.defaultUserAgent, .defaultAcceptEncoding, .defaultAcceptLanguage)
 	}
 }

@@ -6,35 +6,36 @@
 
 import Foundation
 import OrderedCollections
+import HTTPTypes
 
 extension HTTPHeaders: ExpressibleByArrayLiteral {
-    public init(arrayLiteral elements: HTTPHeader...) {
+    public init(arrayLiteral elements: HTTPField...) {
         self.init()
-        elements.forEach { self[$0.name] = $0.value ?? "" }
+        elements.forEach { self[$0.name] = $0 }
     }
 }
 
 public extension HTTPHeaders {
-    init(_ headers: [HTTPHeader]) {
+    init(_ headers: [HTTPField]) {
         self.init()
-        headers.forEach { self[$0.name] = $0.value ?? "" }
+        headers.forEach { self[$0.name] = $0}
     }
     
-    var headers: [HTTPHeader] {
-        elements.map { item in
-            HTTPHeader(name: item.key, value: item.value)
+    var headers: [HTTPField] {
+        elements.map { (key: HTTPField.Name, value: HTTPField) in
+            value
         }
     }
     
     var dictionary: [String: String] {
         var dictionary: [String: String] = [:]
-        self.forEach { item in
-            dictionary[item.key] = item.value
+        for item in self {
+            dictionary[item.key.canonicalName] = item.value.value
         }
         return dictionary
     }
     
-    func contains(_ header: HTTPHeader) -> Bool {
+    func contains(_ header: HTTPField) -> Bool {
         self[header.name] != nil
     }
 }
