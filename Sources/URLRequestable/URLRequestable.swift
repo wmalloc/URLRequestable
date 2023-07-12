@@ -9,6 +9,8 @@ import HTTPTypes
 
 public typealias URLDataResponse = (data: Data, response: URLResponse)
 
+public typealias URLDataResponse = (data: Data, response: URLResponse)
+
 public protocol URLRequestable {
     associatedtype Response
 
