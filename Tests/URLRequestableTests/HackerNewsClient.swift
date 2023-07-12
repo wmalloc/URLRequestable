@@ -8,6 +8,7 @@
 import Foundation
 import URLRequestable
 
+// https://github.com/HackerNews/API
 class HackerNewsClient: URLRequestAsyncTransferable {
     let session: URLSession
     
