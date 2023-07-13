@@ -13,3 +13,14 @@ public extension HTTPFields {
         HTTPFields([.defaultUserAgent, .defaultAcceptEncoding, .defaultAcceptLanguage])
     }
 }
+
+public extension HTTPFields {
+    var dictionary: [String: String] {
+        var items: [String: String] = [:]
+        for item in self {
+            items[item.name.canonicalName] = item.value
+        }
+        
+        return items
+    }
+}

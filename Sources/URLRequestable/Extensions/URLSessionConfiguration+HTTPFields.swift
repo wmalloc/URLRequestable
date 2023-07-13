@@ -9,7 +9,7 @@ import Foundation
 import HTTPTypes
 
 public extension URLSessionConfiguration {
-    var headers: HTTPFields? {
+    var httpAdditionalFields: HTTPFields? {
         get {
             guard let httpAdditionalHeaders else {
                 return nil

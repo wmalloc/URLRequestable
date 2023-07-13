@@ -22,10 +22,10 @@ final class HTTPHeadersTests: XCTestCase {
 
 	func testURLSessionConfiguration() throws {
 		let session = URLSessionConfiguration.default
-		session.headers = HTTPFields.defaultHeaders
-		XCTAssertEqual(session.httpAdditionalHeaders?.count, 3)
+		session.httpAdditionalFields = HTTPFields.defaultHeaders
+		XCTAssertEqual(session.httpAdditionalFields?.count, 3)
 
-		let headers = session.headers
+		let headers = session.httpAdditionalHeaders
 		XCTAssertEqual(headers?.count, 3)
 	}
 
@@ -47,13 +47,13 @@ final class HTTPHeadersTests: XCTestCase {
 		var headers = HTTPFields()
         headers.append(.contentType(.xml))
         XCTAssertEqual(headers.count, 1)
-        XCTAssertEqual(headers[.contentType], .contentType(.xml))
+        XCTAssertEqual(headers[.contentType], .xml)
         headers.append(.contentType(.json))
 		XCTAssertEqual(headers.count, 1)
-		XCTAssertEqual(headers[.contentType], .contentType(.json))
-		headers = headers.add(HTTPField(name: .authorization, value: "Password"))
-			.add(HTTPField(name: .contentLength, value: "\(0)"))
-			.add(.authorization(token: "Token"))
+		XCTAssertEqual(headers[.contentType], .json)
+		headers.append(HTTPField(name: .authorization, value: "Password"))
+        headers.append(HTTPField(name: .contentLength, value: "\(0)"))
+        headers.append(.authorization(token: "Token"))
 		XCTAssertEqual(headers.count, 3)
 		let dictionary = headers.dictionary
 		XCTAssertEqual(dictionary.count, 3)
