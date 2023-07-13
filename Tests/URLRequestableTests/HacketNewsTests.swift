@@ -8,6 +8,7 @@
 import XCTest
 @testable import URLRequestable
 import HTTPTypes
+import HTTPTypesFoundation
 
 final class HacketNewsTests: XCTestCase {
     let api = HackerNewsClient()

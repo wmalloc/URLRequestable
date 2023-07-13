@@ -8,16 +8,18 @@ import Foundation
 import HTTPTypes
 import HTTPTypesFoundation
 
-public typealias URLDataResponse = (data: Data, response: URLResponse)
+public typealias URLDataResponse = DataResponse<URLResponse>
+public typealias HTTPDataResponse = DataResponse<HTTPResponse>
 
 public protocol URLRequestable {
     associatedtype Response
 
-    typealias ResponseTransformer = Transformer<URLDataResponse, Response>
+    typealias ResponseTransformer = Transformer<DataResponse<URLResponse>, Response>
 
     var apiBaseURLString: String { get }
     var method: URLRequest.Method { get }
     var path: String { get }
+    var headerFields: HTTPFields? { get }
     var headers: [HTTPField] { get }
     var body: Data? { get }
     var queryItems: [URLQueryItem]? { get }
@@ -25,7 +27,7 @@ public protocol URLRequestable {
     var transformer: ResponseTransformer { get }
 
     func url(queryItems: [URLQueryItem]?) throws -> URL
-    func urlRequest(headers: [HTTPField]?, queryItems: [URLQueryItem]?) throws -> URLRequest
+    func urlRequest(headers: HTTPFields?, queryItems: [URLQueryItem]?) throws -> URLRequest
 }
 
 public extension URLRequestable {
@@ -33,6 +35,12 @@ public extension URLRequestable {
         .get
     }
 
+    var headerFields: HTTPFields? {
+        var fields = HTTPFields.defaultHeaders
+        fields.append(.accept(.json))
+        return fields
+    }
+    
     var headers: [HTTPField] {
         [.accept(.json), .defaultUserAgent, .defaultAcceptEncoding, .defaultAcceptLanguage]
     }
@@ -60,12 +68,12 @@ public extension URLRequestable {
         return url
     }
 
-    func urlRequest(headers: [HTTPField]? = nil, queryItems: [URLQueryItem]? = nil) throws -> URLRequest {
+    func urlRequest(headers: HTTPFields? = nil, queryItems: [URLQueryItem]? = nil) throws -> URLRequest {
         let url = try url(queryItems: queryItems)
         let request = URLRequest(url: url)
             .setMethod(method)
-            .addHeaders(self.headers)
-            .addHeaders(headers ?? [])
+            .addFields(headerFields)
+            .addFields(headers)
             .setHttpBody(body, contentType: .json)
         return request
     }

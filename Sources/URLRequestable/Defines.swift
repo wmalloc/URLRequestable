@@ -9,6 +9,7 @@ import Foundation
 public typealias DecodableHandler<T: Decodable> = (Result<T, Error>) -> Void
 public typealias SerializableHandler = (Result<Any, Error>) -> Void
 public typealias DataHandler<T> = (Result<T, Error>) -> Void
+public typealias DataResponse<ResponseType> = (data: Data, response: ResponseType)
 public typealias ErrorHandler = (Error?) -> Void
 public typealias Transformer<InputType, OutputType> = (InputType) throws -> OutputType
 

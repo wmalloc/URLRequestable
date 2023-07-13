@@ -188,6 +188,18 @@ public extension URLRequest {
     }
 
     @discardableResult
+    func setFields(_ fields: HTTPFields?) -> Self {
+        guard let fields else {
+            return self
+        }
+        var request = self
+        for header in fields {
+            request.setValue(header.value, forHTTPHeaderField: header.name)
+        }
+        return request
+    }
+
+    @discardableResult
     func addHeader(_ header: HTTPField) -> Self {
         return addHttpHeader(header.value, forName: header.name.canonicalName)
     }
@@ -196,6 +208,18 @@ public extension URLRequest {
     func addHeaders(_ headers: [HTTPField]) -> Self {
         var request = self
         for header in headers {
+            request.addValue(header.value, forHTTPHeaderField: header.name.canonicalName)
+        }
+        return request
+    }
+    
+    @discardableResult
+    func addFields(_ fields: HTTPFields?) -> Self {
+        guard let fields else {
+            return self
+        }
+        var request = self
+        for header in fields {
             request.addValue(header.value, forHTTPHeaderField: header.name.canonicalName)
         }
         return request
