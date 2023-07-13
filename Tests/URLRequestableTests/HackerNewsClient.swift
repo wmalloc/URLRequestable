@@ -18,8 +18,11 @@ class HackerNewsClient: URLRequestAsyncTransferable {
 }
 
 struct TopStoriesRequest: URLRequestable {
+    let scheme: String = "https"
+    let host: String = "hacker-news.firebaseio.com"
+    
     typealias Response = [Int]
-    let apiBaseURLString = "https://hacker-news.firebaseio.com"
+    var apiBaseURLString: String { "\(scheme)://\(host)" }
     let path: String = "/v0/topstories.json"
     var queryItems: [URLQueryItem]? {
         [URLQueryItem(name: "print", value: "pretty")]
